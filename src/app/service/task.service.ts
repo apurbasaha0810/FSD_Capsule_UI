@@ -5,7 +5,7 @@ import {Task} from "../model/task.model";
 @Injectable()
 export class TaskService {
   constructor(private http: HttpClient) { }
-  baseUrl: string = 'http://localhost:8080/task-tracker/tasks';
+  baseUrl: string = 'http://localhost:8080/task-manager/tasks';
 
   getTasks() {
     return this.http.get<Task[]>(this.baseUrl);
