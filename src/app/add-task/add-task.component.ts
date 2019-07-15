@@ -24,7 +24,6 @@ export class AddTaskComponent implements OnInit {
   addForm: FormGroup;
 
   ngOnInit() {
-
     this.addForm = this.formBuilder.group({
       id: [],
       task: ['', Validators.required],

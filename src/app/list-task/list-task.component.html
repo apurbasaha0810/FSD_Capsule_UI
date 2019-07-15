@@ -14,7 +14,7 @@
     </div>
 
     <div class="form-group">
-      
+
       <td> <label style="font-weight: bold;" for="parent_task">Priority:</label>
         <input type="text" [(ngModel)]="taskFilter.priority" placeholder="priority search" class="form-control"></td>
 
@@ -31,29 +31,23 @@
   <table class="table table-striped">
     <thead>
       <tr>
-
         <th>Task</th>
+        <th>Parent</th>
+        <th>Priority</th>
         <th>Start Date</th>
         <th>End Date</th>
-        <th>Priority</th>
-        <th>Parent Task</th>
-
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let task of tasks  | filterBy: taskFilter">
-
         <td>{{task.task}}</td>
+        <td>{{task.parent_task}}</td>
+        <td>{{task.priority}}</td>
         <td>{{task.start_date}}</td>
         <td>{{task.end_date}}</td>
-        <td>{{task.priority}}</td>
-        <td>{{task.parent_task}}</td>
-
-        <td><button *ngIf="task.finished == 'N'" class="btn btn-danger" (click)="deleteTask(task)"
-            style="margin-left: 10px;"> Delete</button></td>
-        <td><button *ngIf="task.finished == 'N'" class="btn btn-success" (click)="editTask(task)"> Edit</button></td>
-        <td><button *ngIf="task.finished == 'N'" class="btn btn-success" (click)="finishTask(task)"> End Tasks</button></td>
-
+        <td><button *ngIf="task.finished == 'N'" class="btn btn-success" (click)="editTask(task)">Edit</button></td>
+        <td><button *ngIf="task.finished == 'N'" class="btn btn-success" (click)="finishTask(task)">End Task</button>
+        </td>
       </tr>
     </tbody>
   </table>

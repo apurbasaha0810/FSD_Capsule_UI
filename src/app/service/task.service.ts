@@ -24,9 +24,6 @@ export class TaskService {
     return this.http.put(this.baseUrl + '/' + user.task_id,user);
   }
 
-  deleteTask(task_id: number) {
-    return this.http.delete(this.baseUrl + '/delete/' + task_id);
-  }
   finishTask(task_id: number) {
     return this.http.delete(this.baseUrl + '/finish/' + task_id);
   }

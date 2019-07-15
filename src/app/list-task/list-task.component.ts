@@ -28,13 +28,6 @@ public minDate: Date = new Date ("05/07/2017");
         this.tasks = data;
       });
   }
-
-  deleteTask(task: Task): void {
-    this.taskService.deleteTask(task.task_id)
-      .subscribe( data => {
-        this.tasks = this.tasks.filter(u => u !== task);
-      })
-  };
   
   finishTask(user: Task): void {
     this.taskService.finishTask(user.task_id)
