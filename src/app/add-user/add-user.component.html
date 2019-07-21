@@ -1,0 +1,60 @@
+<div class="col-md-6">
+    <h3>Project Manager</h3>
+    <label style="font-weight: bold; font-size: large;" (click)="addTask()">Add Task</label>
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    <label style="color: blue; font-weight: bold; font-size: large;">Add User</label>
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    <label style="font-weight: bold; font-size: large;" (click)="viewTask()">View Task</label>
+  
+    <form [formGroup]="addUserForm">
+      <div class="form-group">
+        <label style="font-weight: bold;" for="first_name">First Name:</label>
+        <input type="first_name" formControlName="first_name" placeholder="First Name" name="first_name"
+          class="form-control" id="first_name">
+      </div>
+  
+      <div class="form-group">
+        <label style="font-weight: bold;" for="last_name">Last Name:</label>
+        <input type="last_name" formControlName="last_name" placeholder="Last Name" name="last_name" class="form-control"
+          id="last_name">
+      </div>
+  
+      <div class="form-group">
+        <label style="font-weight: bold;" for="employee_id">Employee ID:</label>
+        <input type="employee_id" formControlName="employee_id" placeholder="Employee ID" name="employee_id"
+          class="form-control" id="employee_id">
+      </div>
+  
+      <button class="btn btn-success" (click)="onSubmit()">Add</button>
+      &nbsp;&nbsp;&nbsp;&nbsp;
+      <button class="btn waves-light" (click)="resetUser()">Reset</button>
+
+      <div class="row">
+          <div class="col">
+            <span layout="row">
+              <hr flex />
+              <hr flex /></span>
+          </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+              <span layout="row">
+                <hr flex /></span>
+            </div>
+          </div>
+  
+      <table class="table table-striped">
+        <tbody>
+          <tr *ngFor="let user of users">
+            <td>{{user.first_name}}</td>
+            <td>{{user.last_name}}</td>
+            <td>{{user.employee_id}}</td>
+            <td><button class="btn btn-success" (click)="editTask(task)">Edit</button></td>
+            <td><button class="btn btn-success" (click)="finishTask(task)">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </form>
+  </div>

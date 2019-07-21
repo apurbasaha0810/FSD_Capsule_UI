@@ -17,9 +17,8 @@ import { FormsModule } from '@angular/forms';
 import { FilterPipeModule } from 'ngx-filter-pipe';
 import { Pipe, PipeTransform } from '@angular/core'; 
 import {CommonModule} from "@angular/common";
-
-
-
+import { AddUserComponent } from './add-user/add-user.component';
+import { UserService } from './service/user.service';
 
 @NgModule({
   declarations: [
@@ -27,8 +26,8 @@ import {CommonModule} from "@angular/common";
     LoginComponent,
     ListTaskComponent,
     AddTaskComponent,
-    EditTaskComponent
-	
+    EditTaskComponent,
+    AddUserComponent
   ],
   imports: [
     BrowserModule,
@@ -40,9 +39,8 @@ import {CommonModule} from "@angular/common";
 	Ng2FilterPipeModule,
 	FilterPipeModule,
 	FormsModule,
-	 
   ],
-  providers: [AuthenticationService, TaskService],
+  providers: [AuthenticationService, TaskService, UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

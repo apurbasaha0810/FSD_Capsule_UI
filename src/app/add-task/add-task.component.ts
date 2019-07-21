@@ -49,4 +49,9 @@ export class AddTaskComponent implements OnInit {
   viewTask(): void {
     this.router.navigate(['list-task']);
   };
+
+  addUser(): void {
+    this.router.navigate(['add-user']);
+  }
+
 }
