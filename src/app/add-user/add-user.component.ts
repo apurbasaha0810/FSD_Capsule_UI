@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from '@angular/router';
 import { UserService } from '../service/user.service';
 import { User } from '../model/user.model';
+import { FilterPipe } from 'ngx-filter-pipe';
 
 @Component({
   selector: 'app-add-user',
@@ -11,20 +12,26 @@ import { User } from '../model/user.model';
 })
 export class AddUserComponent implements OnInit {
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private userService: UserService) { }
+  constructor(private formBuilder: FormBuilder, private router: Router, private userService: UserService, private filterPipe: FilterPipe) { }
 
   addUserForm: FormGroup;
   users: User[];
+  submitted: boolean = false;
+  invalidUser: boolean = false;
+  userFilter: any = {first_name:''};
 
   ngOnInit() {
     this.addUserForm = this.formBuilder.group({
       id: [],
       first_name: ['', Validators.required],
-      last_name: ['', Validators.required],
+      last_name: '',
       employee_id: ['', Validators.required]
     });
+    this.getUsers('first_name');
+  }
 
-    this.userService.getUsers()
+  getUsers(sortBy: string) {
+    this.userService.getUsers(sortBy)
       .subscribe(data => {
         this.users = data;
       });
@@ -35,9 +42,20 @@ export class AddUserComponent implements OnInit {
   }
 
   onSubmit() {
-    this.userService.createTask(this.addUserForm.value)
+    this.submitted = true;
+    if (this.addUserForm.invalid) {
+      return;
+    }
+    this.userService.createUser(this.addUserForm.value)
       .subscribe(data => {
-        this.router.navigate(['add-user']);
+        this.getUsers('first_name');
+      });
+  }
+
+  deleteUser(user: User): void {
+    this.userService.deleteUser(user.employee_id)
+      .subscribe(data => {
+        this.getUsers('first_name');
       });
   }
 

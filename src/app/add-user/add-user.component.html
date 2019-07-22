@@ -1,60 +1,142 @@
-<div class="col-md-6">
-    <h3>Project Manager</h3>
-    <label style="font-weight: bold; font-size: large;" (click)="addTask()">Add Task</label>
-    &nbsp;&nbsp;&nbsp;&nbsp;
-    <label style="color: blue; font-weight: bold; font-size: large;">Add User</label>
-    &nbsp;&nbsp;&nbsp;&nbsp;
-    <label style="font-weight: bold; font-size: large;" (click)="viewTask()">View Task</label>
-  
-    <form [formGroup]="addUserForm">
-      <div class="form-group">
-        <label style="font-weight: bold;" for="first_name">First Name:</label>
-        <input type="first_name" formControlName="first_name" placeholder="First Name" name="first_name"
-          class="form-control" id="first_name">
-      </div>
-  
-      <div class="form-group">
-        <label style="font-weight: bold;" for="last_name">Last Name:</label>
-        <input type="last_name" formControlName="last_name" placeholder="Last Name" name="last_name" class="form-control"
-          id="last_name">
-      </div>
-  
-      <div class="form-group">
-        <label style="font-weight: bold;" for="employee_id">Employee ID:</label>
-        <input type="employee_id" formControlName="employee_id" placeholder="Employee ID" name="employee_id"
-          class="form-control" id="employee_id">
-      </div>
-  
-      <button class="btn btn-success" (click)="onSubmit()">Add</button>
-      &nbsp;&nbsp;&nbsp;&nbsp;
-      <button class="btn waves-light" (click)="resetUser()">Reset</button>
+<div class="container">
+    <div class="col-md-8">
+  <h3>Project Manager</h3>
+  <label style="font-weight: bold; font-size: large;" (click)="addTask()">Add Task</label>
+  &nbsp;&nbsp;&nbsp;&nbsp;
+  <label style="color: blue; font-weight: bold; font-size: large;">Add User</label>
+  &nbsp;&nbsp;&nbsp;&nbsp;
+  <label style="font-weight: bold; font-size: large;" (click)="viewTask()">View Task</label>
 
+  <form [formGroup]="addUserForm">
+    <div class="form-group">
       <div class="row">
+        <div class="col-md-2">
+          <label for="first_name" class="mb-2 mr-sm-1">First Name:</label>
+        </div>
+        <div class="col-md-7">
+          <input type="first_name" formControlName="first_name" placeholder="First Name" name="first_name"
+            class="form-control" id="first_name">
+          <div *ngIf="submitted && addUserForm.controls.first_name.errors" class="error">
+            <div *ngIf="addUserForm.controls.first_name.errors.required">First Name is required</div>
+          </div>
+        </div>
+        <div class="col-md-3"></div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="row">
+        <div class="col-md-2">
+          <label for="last_name" class="mb-2 mr-sm-1">Last Name:</label>
+        </div>
+        <div class="col-md-7">
+          <input type="last_name" formControlName="last_name" placeholder="Last Name" name="last_name"
+            class="form-control" id="last_name">
+        </div>
+        <div class="col-md-3"></div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="row">
+        <div class="col-md-2">
+          <label for="employee_id">Employee ID:</label>
+        </div>
+        <div class="col-md-3">
+          <input type="text" formControlName="employee_id" placeholder="Employee ID" class="form-control"
+            id="employee_id" name="employee_id">
+          <div *ngIf="submitted && addUserForm.controls.employee_id.errors" class="error">
+            <div *ngIf="addUserForm.controls.employee_id.errors.required">Employee ID is required</div>
+          </div>
+        </div>
+        <div class="col-md-7"></div>
+      </div>
+    </div>
+
+    <button class="btn btn-secondary" (click)="onSubmit()">Add</button>
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    <button class="btn btn-secondary" (click)="resetUser()">Reset</button>
+
+    <div class="row">
+        <div class="col">
+          <span layout="row">
+            <hr flex />
+            <hr flex /></span>
+        </div>
+      </div>
+
+      <div>
+          <form>
+            <div class="row">
+              <div class="col-md-3">
+                <input type="text" class="form-control mb-2 mr-sm-2" id="searchValue" placeholder="Search..."
+                  [(ngModel)]="userFilter.first_name" name="searchValue">
+              </div>
+              <div class="col-md-1">
+                <label i18n="@@employee_id3">Sort:</label>
+              </div>
+              <div class="col-md-2">
+                <button (click)="getUsers('first_name')" class="btn btn-secondary">First
+                  Name</button>
+              </div>
+              <div class="col-md-2">
+                <button (click)="getUsers('last_name')" class="btn btn-secondary">Last
+                  Name</button>
+              </div>
+              <div class="col-md-2">
+                <button (click)="getUsers('employee_id')" class="btn btn-secondary">Id</button>
+              </div>
+              <div class="col-md-2"></div>
+            </div>
+          </form>
+        </div>
+
+    <div *ngFor="let user of users  | filterBy: userFilter">
+        <div class="row">
           <div class="col">
             <span layout="row">
-              <hr flex />
               <hr flex /></span>
           </div>
         </div>
-
+    
         <div class="row">
-            <div class="col">
-              <span layout="row">
-                <hr flex /></span>
-            </div>
+          <div class="col-md-6">
+            <div class="rounded bg-light text-dark">{{user.first_name}}</div>
           </div>
-  
-      <table class="table table-striped">
-        <tbody>
-          <tr *ngFor="let user of users">
-            <td>{{user.first_name}}</td>
-            <td>{{user.last_name}}</td>
-            <td>{{user.employee_id}}</td>
-            <td><button class="btn btn-success" (click)="editTask(task)">Edit</button></td>
-            <td><button class="btn btn-success" (click)="finishTask(task)">Delete</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </form>
-  </div>
+          <div class="col-md-2"></div>
+          <div class="col-md-2">
+            <button type="submit" (click)="editUser(user)" class="btn btn-secondary">Edit</button>
+          </div>
+          <div class="col-md-2"></div>
+        </div>
+    
+        <div class="row">
+          <div class="col-md-6">
+            <div class="rounded bg-light text-dark">{{user.last_name}}</div>
+          </div>
+          <div class="col-md-2"></div>
+          <div class="col-md-2">
+            <button type="submit" (click)="deleteUser(user)" class="btn btn-delete">Delete</button>
+          </div>
+          <div class="col-md-2"></div>
+        </div>
+    
+        <div class="row">
+          <div class="col-md-6">
+            <div class="rounded bg-light text-dark">{{user.employee_id}}</div>
+          </div>
+          <div class="col-md-2"></div>
+          <div class="col-md-4"></div>
+        </div>
+    
+        <div class="row">
+          <div class="col">
+            <span layout="row">
+              <hr flex /></span>
+          </div>
+        </div>
+      </div>
+
+  </form>
+</div>
+</div>
