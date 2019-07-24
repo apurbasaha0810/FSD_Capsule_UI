@@ -31,7 +31,7 @@ export class AddUserComponent implements OnInit {
   }
 
   getUsers(sortBy: string) {
-    this.userService.getUsers(sortBy)
+    this.userService.getUsers(sortBy, 'projectNotAssigned')
       .subscribe(data => {
         this.users = data;
       });
@@ -65,6 +65,10 @@ export class AddUserComponent implements OnInit {
 
   addTask(): void {
     this.router.navigate(['add-task']);
+  };
+
+  addProject(): void {
+    this.router.navigate(['add-project']);
   };
 
 }

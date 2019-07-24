@@ -1,6 +1,8 @@
 <div class="container">
     <div class="col-md-8">
   <h3>Project Manager</h3>
+  <label style="font-weight: bold; font-size: large;" (click)="addProject()">Add Project</label>
+  &nbsp;&nbsp;&nbsp;&nbsp;
   <label style="font-weight: bold; font-size: large;" (click)="addTask()">Add Task</label>
   &nbsp;&nbsp;&nbsp;&nbsp;
   <label style="color: blue; font-weight: bold; font-size: large;">Add User</label>
@@ -73,7 +75,7 @@
                   [(ngModel)]="userFilter.first_name" name="searchValue">
               </div>
               <div class="col-md-1">
-                <label i18n="@@employee_id3">Sort:</label>
+                <label>Sort:</label>
               </div>
               <div class="col-md-2">
                 <button (click)="getUsers('first_name')" class="btn btn-secondary">First
@@ -91,7 +93,7 @@
           </form>
         </div>
 
-    <div *ngFor="let user of users  | filterBy: userFilter">
+    <div *ngFor="let user of users | filterBy: userFilter">
         <div class="row">
           <div class="col">
             <span layout="row">
