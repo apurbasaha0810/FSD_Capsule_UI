@@ -54,4 +54,8 @@ export class AddTaskComponent implements OnInit {
     this.router.navigate(['add-user']);
   }
 
+  addProject(): void {
+    this.router.navigate(['add-project']);
+  };
+
 }

@@ -49,4 +49,13 @@ public minDate: Date = new Date ("05/07/2017");
   addTask(): void {
     this.router.navigate(['add-task']);
   };
+
+  addUser(): void {
+    this.router.navigate(['add-user']);
+  }
+
+  addProject(): void {
+    this.router.navigate(['add-project']);
+  };
+
 }
