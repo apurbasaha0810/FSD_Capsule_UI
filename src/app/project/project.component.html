@@ -11,7 +11,7 @@
     <label style="font-weight: bold; font-size: large;" (click)="viewTask()">View Task</label>
 
     <form [formGroup]="projectForm">
-
+      <br/>
       <div class="row">
         <div class="col-md-2">
           <label for="project_name" class="mb-2 mr-sm-1">Project:</label>
@@ -243,7 +243,7 @@
           <button (click)="suspendProject(project.project_id)" class="btn btn-secondary">Suspend</button>
         </div>
         <div *ngIf="project.status=='SUSPENDED'">
-          <button (click)="activateProject(project.project_id)" class="btn btn-secondary">Active</button>
+          <button (click)="activateProject(project.project_id)" class="btn btn-secondary">Activate</button>
         </div>
       </div>
       <div class="col-md-2"></div>

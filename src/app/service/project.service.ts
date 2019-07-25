@@ -25,4 +25,8 @@ export class ProjectService {
     return this.http.get(this.baseUrl + '/activateProject/' + projectId);
   }
 
+  getAllActiveProjects() {
+    return this.http.get<Project[]>(this.baseUrl +'/getAllActiveProjects');
+  }
+
 }

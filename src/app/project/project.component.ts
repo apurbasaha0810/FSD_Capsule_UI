@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { Options } from 'ng5-slider';
 import { Router } from '@angular/router';
-import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UserService } from '../service/user.service';
 import { User } from '../model/user.model';
 import { DatePipe } from '@angular/common';
@@ -70,7 +70,6 @@ export class ProjectComponent implements OnInit {
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((user) => {
       this.projectForm.patchValue({ 'manager_id': user.user_id });
       this.projectForm.patchValue({ 'manager_name': user.first_name + ' ' + user.last_name });
-      console.log("UserId:" + user.user_id);
     }, (reason) => {
       this.closeResult = 'Dismissed';
     });
