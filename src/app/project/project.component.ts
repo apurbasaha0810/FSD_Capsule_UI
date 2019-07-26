@@ -59,7 +59,7 @@ export class ProjectComponent implements OnInit {
   }
 
   private findAllUsersWithNoProject() {
-    this.userService.getUsers('first_name', 'projectAssigned')
+    this.userService.getUsers('first_name', 'N', 'NA')
       .subscribe(data => {
         this.users = data;
       });

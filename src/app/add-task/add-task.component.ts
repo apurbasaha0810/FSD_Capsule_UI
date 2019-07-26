@@ -6,10 +6,9 @@ import { TaskService } from '../service/task.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ProjectService } from '../service/project.service';
 import { Project } from '../model/project.model';
-
-const PROJECT_ID: string = 'project_id';
-const PARENT_ID: string = 'parent_id';
-const USER_ID: string = 'user_id';
+import { ParentTask } from '../model/parentTask.model';
+import { UserService } from '../service/user.service';
+import { User } from '../model/user.model';
 
 @Component({
   selector: 'app-add-task',
@@ -24,27 +23,30 @@ export class AddTaskComponent implements OnInit {
   };
 
   constructor(private formBuilder: FormBuilder, private router: Router, private projectService: ProjectService,
-    private taskService: TaskService, private modalService: NgbModal) { }
+    private taskService: TaskService, private userService: UserService, private modalService: NgbModal) { }
 
   addForm: FormGroup;
   parentCheckbox: Boolean;
   closeResult: string;
   activeProjectList: Project[];
+  parentTaskList: ParentTask[];
+  userList: User[];
 
   ngOnInit() {
-    //this.getParentTaskList();
+    this.getParentTaskList();
     this.findAllActiveProjects();
-    //this.getUserList();
+    this.getUserList();
 
     this.addForm = this.formBuilder.group({
       task_id: [],
       task: ['', Validators.required],
       priority: ['', Validators.required],
-      parent_task_id: [],
+      parent_id: [],
       parent_task: ['', Validators.required],
       start_date: ['', Validators.required],
       end_date: ['', Validators.required],
-      project_id: ['', Validators.required],
+      project_id: [],
+      project_name: ['', Validators.required],
       user_id: [],
       user_name: ['', Validators.required]
     });
@@ -75,12 +77,8 @@ export class AddTaskComponent implements OnInit {
   };
 
   toggle() {
-    /*this.disableField('start_date');
+    this.disableField('start_date');
     this.disableField('end_date');
-    this.disableField('priority');
-    this.disableField('parent_id');
-    this.disableField('user_id');
-    this.disableField('project_id');*/
   }
 
   private disableField(controlerName: string) {
@@ -90,13 +88,16 @@ export class AddTaskComponent implements OnInit {
 
   open(content: any) {
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((response: any) => {
-      if (response[PROJECT_ID]) {
-        this.addForm.patchValue({ 'project_id': response[PROJECT_ID] });
-      } /*else if (response[USER_ID]) {
-        this.addForm.patchValue({ 'user_id': response[USER_ID] });
-      } else if (response[PARENT_ID]) {
-        this.addForm.patchValue({ 'parent_id': response[PARENT_ID] });
-      }*/
+      if (response['project_id']) {
+        this.addForm.patchValue({ 'project_id': response['project_id'] });
+        this.addForm.patchValue({ 'project_name': response['project_name'] });
+      } else if (response['user_id']) {
+        this.addForm.patchValue({ 'user_id': response['user_id'] });
+        this.addForm.patchValue({ 'user_name': (response['first_name']+' '+response['last_name'])});
+      } else if (response['parent_id']) {
+        this.addForm.patchValue({ 'parent_id': response['parent_id'] });
+        this.addForm.patchValue({ 'parent_task': response['parent_task'] });
+      }
     }, (reason) => {
       this.closeResult = `Dismissed`;
     });
@@ -104,6 +105,19 @@ export class AddTaskComponent implements OnInit {
 
   private findAllActiveProjects() {
     this.projectService.getAllActiveProjects().subscribe(response => this.activeProjectList = response);
+  }
+
+  private getParentTaskList() {
+    this.taskService.getAllParentTasks().subscribe((data: any) => {
+      this.parentTaskList = data;
+    });
+  }
+
+  private getUserList() {
+    this.userService.getUsers('first_name', 'NA', 'N')
+      .subscribe(data => {
+        this.userList = data;
+      });
   }
 
 }

@@ -7,8 +7,8 @@ export class UserService {
   constructor(private http: HttpClient) { }
   baseUrl: string = 'http://localhost:8080/task-manager/users';
 
-  getUsers(sortBy: string, projAsigndFlg: string) {
-    return this.http.get<User[]>(this.baseUrl +'/'+sortBy+'/'+projAsigndFlg);
+  getUsers(sortBy: string, projAsigndFlg: string, taskAsigndFlg: string) {
+    return this.http.get<User[]>(this.baseUrl +'/'+sortBy+'/'+projAsigndFlg+'/'+taskAsigndFlg);
   }
 
   createUser(user: User) {

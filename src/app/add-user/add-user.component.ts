@@ -31,7 +31,7 @@ export class AddUserComponent implements OnInit {
   }
 
   getUsers(sortBy: string) {
-    this.userService.getUsers(sortBy, 'projectNotAssigned')
+    this.userService.getUsers(sortBy, 'NA', 'NA')
       .subscribe(data => {
         this.users = data;
       });

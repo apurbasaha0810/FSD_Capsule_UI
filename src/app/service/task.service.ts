@@ -27,5 +27,9 @@ export class TaskService {
   finishTask(task_id: number) {
     return this.http.delete(this.baseUrl + '/finish/' + task_id);
   }
+
+  getAllParentTasks() {
+    return this.http.get<Task[]>(this.baseUrl + '/getAllParentTasks');
+  }
   
 }
