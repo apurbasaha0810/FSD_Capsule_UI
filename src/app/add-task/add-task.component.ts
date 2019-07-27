@@ -15,6 +15,7 @@ import { User } from '../model/user.model';
   templateUrl: './add-task.component.html',
   styleUrls: ['./add-task.component.css']
 })
+
 export class AddTaskComponent implements OnInit {
   private value: number = 1;
   options: Options = {

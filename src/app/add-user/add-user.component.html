@@ -19,8 +19,9 @@
         </div>
         <div class="col-md-7">
           <input type="first_name" formControlName="first_name" placeholder="First Name" name="first_name"
-            class="form-control" id="first_name">
-          <div *ngIf="submitted && addUserForm.controls.first_name.errors" class="error">
+            class="form-control" [ngClass]="{ 'is-invalid': (addUserForm.controls.first_name.touched || submitted ) && addUserForm.controls.first_name.errors }"
+            id="first_name">
+          <div class="invalid-feedback" *ngIf="(addUserForm.controls.first_name.touched || submitted ) && addUserForm.controls.first_name.errors">
             <div *ngIf="addUserForm.controls.first_name.errors.required">First Name is required</div>
           </div>
         </div>
@@ -48,8 +49,9 @@
         </div>
         <div class="col-md-3">
           <input type="text" formControlName="employee_id" placeholder="Employee ID" class="form-control"
-            id="employee_id" name="employee_id">
-          <div *ngIf="submitted && addUserForm.controls.employee_id.errors" class="error">
+            id="employee_id" [ngClass]="{ 'is-invalid': (addUserForm.controls.employee_id.touched || submitted ) && addUserForm.controls.employee_id.errors }"
+            name="employee_id">
+          <div class="invalid-feedback" *ngIf="(addUserForm.controls.employee_id.touched || submitted ) && addUserForm.controls.employee_id.errors">
             <div *ngIf="addUserForm.controls.employee_id.errors.required">Employee ID is required</div>
           </div>
         </div>

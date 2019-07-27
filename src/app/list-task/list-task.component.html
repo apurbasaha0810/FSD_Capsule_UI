@@ -1,120 +1,51 @@
 <div class="container">
-    <div class="col-md-10">
-  <h3>Project Manager</h3>
-  <br />
-  <label style="font-weight: bold; font-size: large;" (click)="addProject()">Add Project</label>
-  &nbsp;&nbsp;&nbsp;&nbsp;
-  <label style="font-weight: bold; font-size: large;" (click)="addTask()"> Add Task</label>
-  &nbsp;&nbsp;&nbsp;&nbsp;
-  <label style="font-weight: bold; font-size: large;" (click)="addUser()">Add User</label>
-  &nbsp;&nbsp;&nbsp;&nbsp;
-  <label style="color: blue; font-weight: bold; font-size: large;">View Task</label>
+  <div class="col-md-9">
+    <h3>Project Manager</h3>
+    <br />
+    <label style="font-weight: bold; font-size: large;" (click)="addProject()">Add Project</label>
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    <label style="font-weight: bold; font-size: large;" (click)="addTask()"> Add Task</label>
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    <label style="font-weight: bold; font-size: large;" (click)="addUser()">Add User</label>
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    <label style="color: blue; font-weight: bold; font-size: large;">View Task</label>
 
-  <form>
-    <!--<div class="row">
-        <div class="col-md-5">
+    <form>
+      <div class="row">
+        <div class="col-md-4">
           <div class="row">
-              <div class="col-md-4">
-                  <label for="searchValue" class="mb-2 mr-sm-1">Project:</label>
-                </div>
-            <div class="col-md-4">
-              <input type="number" class="form-control mb-2 mr-sm-2" id="searchValue" 
-                [(ngModel)]="searchFilter.project_id" name="searchValue">
+            <div class="col-md-2">
+              <label for="searchValue" class="mb-2 mr-sm-1">Task:</label>
             </div>
-            <div class="col-md-4">
-              <button type="button" class="btn btn-secondary rounded-circle" (click)="open(projectContent)"
-                i18n="@@addTask">Search</button>
+            <div class="col-md-10">
+              <input type="text" class="form-control mb-2 mr-sm-2" id="searchValue" [(ngModel)]="taskFilter.task"
+                name="searchValue">
             </div>
           </div>
         </div>
-  
-        <div class="col-md-1">
+
+        <div class="col-md-2">
           <label i18n="@@project_id3">Sort Task By:</label>
         </div>
         <div class="col-md-6">
           <div class="row">
             <div class="col-md-3">
-              <button type="submit" (click)="sort('start_date')" class="btn btn-secondary" i18n="@@addTask">Start
-                Date</button>
+              <button type="submit" (click)="sort('start_date')" class="btn btn-secondary">Start Date</button>
             </div>
             <div class="col-md-3">
-              <button type="submit" (click)="sort('end_date')" class="btn btn-secondary" i18n="@@addTask">End
-                Date</button>
+              <button type="submit" (click)="sort('end_date')" class="btn btn-secondary">End Date</button>
             </div>
             <div class="col-md-3">
-              <button type="submit" (click)="sort('priority')" class="btn btn-secondary"
-                i18n="@@addTask">Priority</button>
+              <button type="submit" (click)="sort('priority')" class="btn btn-secondary">Priority</button>
             </div>
             <div class="col-md-3">
-              <button type="submit" (click)="sort('status')" class="btn btn-secondary" i18n="@@addTask">Completed</button>
+              <button type="submit" (click)="sort('status')" class="btn btn-secondary">Completed</button>
             </div>
           </div>
   
         </div>
-      </div>-->
-
-
-    <div class="row">
-      <div class="col">
-        <span layout="row">
-          <hr flex />
-          <hr flex /></span>
-      </div>
-    </div>
-
-    <div *ngFor="let task of tasks">
-      <div class="row">
-        <div class="col-md-3">
-          <h6>Task</h6>
-        </div>
-        <div class="col-md-2">
-          <h6>Parent</h6>
-        </div>
-        <div class="col-md-1">
-          <h6>Priority</h6>
-        </div>
-        <div class="col-md-2">
-          <h6>Start</h6>
-        </div>
-        <div class="col-md-2">
-          <h6>End</h6>
-        </div>
-        <div class="col-md-1">
-          <h6></h6>
-        </div>
-        <div class="col-md-1">
-          <h6></h6>
-        </div>
       </div>
 
-      <div class="row">
-        <div class="col-md-3">
-          <div class="rounded bg-secondary text-white">{{task.task}}</div>
-        </div>
-        <div class="col-md-2">
-          <div *ngIf="task.parent_task != null" class="rounded bg-secondary text-white">
-            {{task.parent_task}}</div>
-        </div>
-        <div class="col-md-1">
-          {{task.priority}}
-        </div>
-        <div class="col-md-2">
-          {{task.start_date | date: 'dd/MM/yyyy'}}
-        </div>
-        <div class="col-md-2">
-          {{task.end_date | date: 'dd/MM/yyyy'}}
-        </div>
-        <div class="col-md-1">
-          <div *ngIf="task.finished == 'N'">
-            <button class="btn btn-secondary" (click)="editTask(task)">Edit</button>
-          </div>
-        </div>
-        <div class="col-md-1">
-          <div *ngIf="task.finished == 'N'">
-            <button class="btn btn-secondary" (click)="finishTask(task)">End Task</button>
-          </div>
-        </div>
-      </div>
 
       <div class="row">
         <div class="col">
@@ -124,35 +55,69 @@
         </div>
       </div>
 
-    </div>
-  </form>
-  </div>
-</div>
+      <div *ngFor="let task of tasks | filterBy: taskFilter">
+        <div class="row">
+          <div class="col-md-3">
+            <h6>Task</h6>
+          </div>
+          <div class="col-md-2">
+            <h6>Parent</h6>
+          </div>
+          <div class="col-md-1">
+            <h6>Priority</h6>
+          </div>
+          <div class="col-md-2">
+            <h6>Start</h6>
+          </div>
+          <div class="col-md-2">
+            <h6>End</h6>
+          </div>
+          <div class="col-md-1">
+            <h6></h6>
+          </div>
+          <div class="col-md-1">
+            <h6></h6>
+          </div>
+        </div>
 
-<!--Modals-->
-<!--<div>
-    <ng-template #projectContent let-modal>
-      <div class="modal-header">
-        <h4 class="modal-title" id="modal-basic-title">Project</h4>
-        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form>
-          <div class="form-group">
-            <label for="dateOfBirth">Select a Project</label>
-            <div class="input-group">
-              <div *ngFor="let project of projectList">
-                <br />
-                <input name="options" type="radio" [(ngModel)]="parentProject" [ngModelOptions]="{standalone: true}"
-                  value="{{project.project_id}}" (change)="modal.close(project)" /> {{project.project_name}}
-                <br />
-              </div>
-  
+        <div class="row">
+          <div class="col-md-3">
+            <div class="rounded bg-secondary text-white">{{task.task}}</div>
+          </div>
+          <div class="col-md-2">
+            <div *ngIf="task.parent_task != null" class="rounded bg-secondary text-white">
+              {{task.parent_task}}</div>
+          </div>
+          <div class="col-md-1">
+            {{task.priority}}
+          </div>
+          <div class="col-md-2">
+            {{task.start_date | date: 'dd/MM/yyyy'}}
+          </div>
+          <div class="col-md-2">
+            {{task.end_date | date: 'dd/MM/yyyy'}}
+          </div>
+          <div class="col-md-1">
+            <div *ngIf="task.status == 'OPEN'">
+              <button class="btn btn-secondary" (click)="editTask(task)">Edit</button>
             </div>
           </div>
-        </form>
+          <div class="col-md-1">
+            <div *ngIf="task.status == 'OPEN'">
+              <button class="btn btn-secondary" (click)="endTask(task)">End Task</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <span layout="row">
+              <hr flex />
+              <hr flex /></span>
+          </div>
+        </div>
+
       </div>
-    </ng-template>
-  </div>-->
+    </form>
+  </div>
+</div>

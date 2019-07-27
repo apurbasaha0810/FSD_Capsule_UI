@@ -7,12 +7,12 @@ export class TaskService {
   constructor(private http: HttpClient) { }
   baseUrl: string = 'http://localhost:8080/task-manager/tasks';
 
-  getTasks() {
-    return this.http.get<Task[]>(this.baseUrl);
+  getTasks(sortBy: string) {
+    return this.http.get<Task[]>(this.baseUrl+'/sortBy/'+sortBy);
   }
 
   getTaskById(task_id: number) {
-    return this.http.get<Task>(this.baseUrl + '/' + task_id);
+    return this.http.get<Task>(this.baseUrl+'/'+task_id);
   }
 
   createTask(task: Task) {
@@ -24,7 +24,7 @@ export class TaskService {
     return this.http.put(this.baseUrl + '/' + user.task_id,user);
   }
 
-  finishTask(task_id: number) {
+  endTask(task_id: number) {
     return this.http.delete(this.baseUrl + '/finish/' + task_id);
   }
 

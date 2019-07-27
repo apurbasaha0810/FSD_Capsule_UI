@@ -1,45 +1,45 @@
 import { Component, OnInit } from '@angular/core';
-import {Router} from "@angular/router";
-import {Task} from "../model/task.model";
-import { FilterPipe } from 'ngx-filter-pipe';
+import { Router } from "@angular/router";
+import { Task } from "../model/task.model";
 import { TaskService } from '../service/task.service';
 
 @Component({
   selector: 'app-list-task',
   templateUrl: './list-task.component.html',
   styleUrls: ['./list-task.component.css']
-   
+
 })
 export class ListTaskComponent implements OnInit {
 
-public minDate: Date = new Date ("05/07/2017");
-    public maxDate: Date = new Date ("05/27/2030");
-    private k: Date = new Date ("05/16/2017");
+  constructor(private router: Router, private taskService: TaskService) { }
 
-  taskFilter: any = { task: '',parent_task:'',start_date:'',end_date:'',priority:''};
-   
   tasks: Task[];
-
-  constructor(private router: Router, private taskService: TaskService,private filterPipe: FilterPipe) { }
+  taskFilter: any = { task: '' };
 
   ngOnInit() {
-    this.taskService.getTasks()
-      .subscribe( data => {
+    this.taskService.getTasks('priority')
+      .subscribe(data => {
         this.tasks = data;
       });
   }
-  
-  finishTask(user: Task): void {
-    this.taskService.finishTask(user.task_id)
-      .subscribe( data => {
-	  this.taskService.getTasks()
-      .subscribe( data => {
+
+  endTask(user: Task): void {
+    this.taskService.endTask(user.task_id)
+      .subscribe(data => {
+        this.taskService.getTasks('priority')
+          .subscribe(data => {
+            this.tasks = data;
+          });
+      })
+  };
+
+  sort(sortBy: string): void {
+    this.taskService.getTasks(sortBy)
+      .subscribe(data => {
         this.tasks = data;
       });
-      })
-	  
-  };
-  
+  }
+
   editTask(task: Task): void {
     localStorage.removeItem("editUserId");
     localStorage.setItem("editUserId", task.task_id.toString());
